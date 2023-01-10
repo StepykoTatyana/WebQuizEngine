@@ -810,57 +810,9 @@ files:
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/8257#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #184
-
-    The JSON element at path &quot;/content/0/id&quot; should equal to 17, found 13
-
-    Full JSON:
-    {
-      &quot;content&quot;: [
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:42.815759400&quot;
-        },
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:42.747744200&quot;
-        },
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:42.680729600&quot;
-        },
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:42.612714300&quot;
-        },
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:42.544697400&quot;
-        },
-        {
-          &quot;id&quot;: 15,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:41.538465400&quot;
-        },
-        {
-          &quot;id&quot;: 15,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:27.221940600&quot;
-        },
-        {
-          &quot;id&quot;: 13,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:25.979602&quot;
-        },
-        {
-          &quot;id&quot;: 4,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:22.504496800&quot;
-        },
-        {
-          &quot;id&quot;: 3,
-          &quot;completedAt&quot;: &quot;2023-01-11T00:36:09.230981900&quot;
-        }
-      ]
-    }
-  time: "Tue, 10 Jan 2023 17:36:43 UTC"
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: "Tue, 10 Jan 2023 18:17:32 UTC"
 record: -1

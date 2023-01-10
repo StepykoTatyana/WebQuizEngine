@@ -108,10 +108,8 @@ public class QuizzesService {
 
 
     public ResponseEntity<?> getCompletedAnswers(UserDetails details, Integer page, Integer pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("completedAt"));
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("completedAt").descending());
         List<Emails> list = repositoryEmails.findByEmail(details.getUsername(), pageable);
-
-        Collections.reverse(list);
         AllQuizzes allQuizzes = new AllQuizzes();
         allQuizzes.setContent(list);
         return new ResponseEntity<>(allQuizzes, HttpStatus.OK);
