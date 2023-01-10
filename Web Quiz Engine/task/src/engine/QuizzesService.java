@@ -1,22 +1,30 @@
 package engine;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class QuizzesService {
 
+//    @Autowired
+//    QuizzesRepository repository;
     @Autowired
-    QuizzesRepository repository;
+    EmailsRepository repositoryEmails;
+
+    @Autowired
+    QuizzesRepositoryWithCrud repository;
 
     public ResponseEntity<?> saveAnswer(String answer) {
         Feedback feedback = new Feedback();
@@ -39,7 +47,7 @@ public class QuizzesService {
     }
 
     public ResponseEntity<?> getQuestions() {
-        return new ResponseEntity<>(repository.findAllQuizzes(), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
     public ResponseEntity<?> getQuestionById(long idUser) {
@@ -52,12 +60,24 @@ public class QuizzesService {
         }
     }
 
-    public ResponseEntity<?> getSolveWithId(long idUser, List<Integer> answer) {
+    public ResponseEntity<?> getSolveWithId(long idUser, List<Integer> answer, UserDetails details) {
         Feedback feedback = new Feedback();
         try {
+            System.out.println(idUser);
+            System.out.println("{{{{{{{{{{{{{{{{{{{{{{{{{idUser}}}}}}}}}}}}}}}}}}}}}}}}}");
+            System.out.println(repository.findById(idUser).get().getAnswer());
             Quizzes quiz = repository.findById(idUser).get();
             if ((quiz.getAnswer() == null && (answer == null || answer.size() == 0))
                     || Arrays.toString(answer.toArray()).equals(Arrays.toString(quiz.getAnswer().toArray()))) {
+                System.out.println(repositoryEmails.findByQuizId(idUser));
+//                if (repositoryEmails.findByQuizId(idUser) == null) {
+                    Emails emails = new Emails();
+                    emails.setId(idUser);
+                    emails.setId(idUser);
+                    emails.setEmail(details.getUsername());
+                    repositoryEmails.save(emails);
+                //}
+
                 feedback.setSuccess(true);
                 feedback.setFeedback("Congratulations, you're right!");
             } else {
@@ -75,5 +95,25 @@ public class QuizzesService {
         repository.deleteById(id);
     }
 
+    public ResponseEntity<?> getQuestionsWithPage(Integer pageNo, Integer pageSize) {
+        AllQuizzes allQuizzes = new AllQuizzes();
+        Page<Quizzes> pagedResult = repository.findAll(PageRequest.of(pageNo, pageSize, Sort.by("id").descending()));
+        allQuizzes.setContent(pagedResult.getContent());
+        if (!pagedResult.hasContent()) {
+            allQuizzes.setContent(new ArrayList<>());
+        }
+        return new ResponseEntity<>(allQuizzes, HttpStatus.OK);
 
+    }
+
+
+    public ResponseEntity<?> getCompletedAnswers(UserDetails details, Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("completedAt"));
+        List<Emails> list = repositoryEmails.findByEmail(details.getUsername(), pageable);
+
+        Collections.reverse(list);
+        AllQuizzes allQuizzes = new AllQuizzes();
+        allQuizzes.setContent(list);
+        return new ResponseEntity<>(allQuizzes, HttpStatus.OK);
+    }
 }

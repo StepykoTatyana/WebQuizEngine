@@ -18,14 +18,9 @@ public class QuizzesController {
 
 
     @PostMapping("/api/quizzes")
-    public  ResponseEntity<?> createQuestionUser(@AuthenticationPrincipal UserDetails details,
-                                                 @Validated @RequestBody() Quizzes quizzes) {
+    public ResponseEntity<?> createQuestionUser(@AuthenticationPrincipal UserDetails details,
+                                                @Validated @RequestBody() Quizzes quizzes) {
         return quizzesService.createQuestion(quizzes, details.getUsername());
-    }
-
-    @GetMapping("/api/quizzes")
-    public  ResponseEntity<?> getQuestion(@AuthenticationPrincipal UserDetails details) {
-        return quizzesService.getQuestions();
     }
 
     @GetMapping("/api/quizzes/{id}")
@@ -35,14 +30,14 @@ public class QuizzesController {
     }
 
     @PostMapping("/api/quizzes/{id}/solve")
-    public  ResponseEntity<?> postAnswerWithId(@AuthenticationPrincipal UserDetails details,
-                                               @PathVariable long id, @RequestBody() Answer answer) {
-        return quizzesService.getSolveWithId(id, answer.getAnswer());
+    public ResponseEntity<?> postAnswerWithId(@AuthenticationPrincipal UserDetails details,
+                                              @PathVariable long id, @RequestBody() Answer answer) {
+        return quizzesService.getSolveWithId(id, answer.getAnswer(), details);
     }
 
     @DeleteMapping("/api/quizzes/{id}")
-    public  ResponseEntity<?> deleteAnswerWithId(@AuthenticationPrincipal UserDetails details,
-                                                 @PathVariable long id) {
+    public ResponseEntity<?> deleteAnswerWithId(@AuthenticationPrincipal UserDetails details,
+                                                @PathVariable long id) {
         if (quizzesService.getQuestionById(id).getStatusCode() == HttpStatus.OK) {
             Quizzes quizzes = quizzesService.repository.findById(id).get();
             if (quizzes.getEmail().equals(details.getUsername())) {
@@ -54,5 +49,19 @@ public class QuizzesController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/api/quizzes")
+    public ResponseEntity<?> getQuestion(@AuthenticationPrincipal UserDetails details,
+                                         @RequestParam(defaultValue = "0") Integer page,
+                                         @RequestParam(defaultValue = "10") Integer pageSize) {
+        return quizzesService.getQuestionsWithPage(page, pageSize);
+    }
+
+    @GetMapping("/api/quizzes/completed")
+    public ResponseEntity<?> getQuestionCompleted(@AuthenticationPrincipal UserDetails details,
+                                                  @RequestParam(defaultValue = "0") Integer page,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
+        return quizzesService.getCompletedAnswers(details, page, pageSize);
     }
 }

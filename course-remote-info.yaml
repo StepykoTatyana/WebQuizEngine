@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/287312/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Fri, 06 Jan 2023 11:32:12 UTC
+update_date: "Mon, 09 Jan 2023 03:12:51 UTC"
 stages:
 - id: 504
   step: 8252
@@ -25,9 +25,9 @@ stages:
   is_completed: false
 topics:
   0:
-  - title: Write, compile, and run
+  - title: "Write, compile, and run"
     theory_id: 3739
-  - title: JVM, JRE, and JDK
+  - title: "JVM, JRE, and JDK"
     theory_id: 3499
   - title: Units of information
     theory_id: 6865
@@ -41,7 +41,7 @@ topics:
     theory_id: 7929
   - title: The big O notation
     theory_id: 16699
-  - title: Best, average and worst cases
+  - title: "Best, average and worst cases"
     theory_id: 20084
   - title: Data structures
     theory_id: 16927
@@ -199,7 +199,7 @@ topics:
     theory_id: 3801
   - title: YAML
     theory_id: 12722
-  - title: Synchronous, asynchronous, parallel
+  - title: "Synchronous, asynchronous, parallel"
     theory_id: 9332
   - title: Processes and threads
     theory_id: 9420
@@ -241,7 +241,7 @@ topics:
     theory_id: 4984
   - title: MVC
     theory_id: 17197
-  - title: 'Hashing: overview'
+  - title: "Hashing: overview"
     theory_id: 9831
   - title: Hash function
     theory_id: 10878
@@ -321,7 +321,7 @@ topics:
     theory_id: 7580
   - title: Regexps in Java
     theory_id: 3670
-  - title: Sets, ranges, alternations
+  - title: "Sets, ranges, alternations"
     theory_id: 3674
   - title: Quantifiers
     theory_id: 3687
@@ -395,7 +395,7 @@ topics:
     theory_id: 20069
   - title: Spring Security Crypto
     theory_id: 21866
-  - title: Web security, OWASP
+  - title: "Web security, OWASP"
     theory_id: 14755
   - title: Getting started with Spring Security
     theory_id: 13856

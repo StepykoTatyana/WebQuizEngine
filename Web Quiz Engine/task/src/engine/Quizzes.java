@@ -6,13 +6,14 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Quizzes {
     @Id
-    @GeneratedValue
-    @Column(columnDefinition = "bigint not null")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "quiz_id",columnDefinition = "bigint not null")
     private Long id;
 
 
@@ -110,5 +111,18 @@ public class Quizzes {
         this.id = id;
     }
 
+    @ElementCollection
+    @CollectionTable(name = "EMAILS", joinColumns = @JoinColumn(name = "quiz_id"))
+    @Transient
+    @JsonIgnore
+//    @OrderColumn
+    private List<String> emails;
 
+    public List<String> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<String> emails) {
+        this.emails = emails;
+    }
 }
